@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World of Car</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>World Editor</h1>
+    <canvas id="myCanvas"></canvas>
+        
+    <div id="controls">
+    </div>
+    
+    
+    <script src="js/math/graph.js"></script>
+    <script src="js/math/utils.js"></script>
+    <script src="js/graphEditor.js"></script>
+    <script src="js/primitives/point.js"></script>
+    <script src="js/primitives/segment.js"></script>
+    
+    <script>    
+        // Elemento que funciona como lienzo en un dibujo 
+        myCanvas = document.getElementById("myCanvas");
+        
+        // Se establecen las dimensiones del lienzo tanto el alto como el ancho
+        myCanvas.width = 600;
+        myCanvas.height = 600;
+        
+        
+        // Es el contexto de dibujo 2D del elemento canvas donde se dibujará el segmento.
+        const ctx = myCanvas.getContext("2d");
+        
+        const p1 = new Point(200, 200);
+        
+        const p2 = new Point(500, 200);
+        
+        const p3 = new Point(400, 400);
+        
+        const p4 = new Point(100, 300);
+        
+        // Vamos a añadir los segmentos 
+        const s1 = new Segment(p1, p2);
+        const s2 = new Segment(p1, p3);
+        const s3 = new Segment(p1, p4);
+        
+        // Te creas un grafo con los puntos que has creado
+        const graph = new Graph([p1, p2, p3, p4], [s1, s2, s3]);
+        
+        // Como se va a dibujar con el raton necesitaremos una nueva clase para hacer que haya listener en el cambas y el grafo para pintar
+        // Tambien dibujara el grapho
+        const graphEditor = new GraphEditor(myCanvas, graph);
+        
+        // para animar y dibujar el grafo
+        
+        animate();
+        
+        function animate() {
+            // Se limpia el canvas
+            ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+            graphEditor.display();
+            //Frame de animacion
+            requestAnimationFrame(animate);
+        }
+    
+    </script>
+</body>
+</html>
