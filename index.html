@@ -17,6 +17,7 @@
     <script src="js/math/graph.js"></script>
     <script src="js/math/utils.js"></script>
     <script src="js/graphEditor.js"></script>
+    <script src="js/viewport.js"></script>
     <script src="js/primitives/point.js"></script>
     <script src="js/primitives/segment.js"></script>
     
@@ -50,6 +51,14 @@
         
         // Como se va a dibujar con el raton necesitaremos una nueva clase para hacer que haya listener en el cambas y el grafo para pintar
         // Tambien dibujara el grapho
+        
+        /*
+        El viewport define el área rectangular en la que se dibujan los gráficos. 
+        No necesariamente tiene que cubrir todo el lienzo (canvas), 
+        puede ser solo una porción de este.
+        */
+        const viewport = new Viewport(myCanvas);
+        
         const graphEditor = new GraphEditor(myCanvas, graph);
         
         // para animar y dibujar el grafo
