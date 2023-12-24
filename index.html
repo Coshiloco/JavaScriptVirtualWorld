@@ -80,7 +80,26 @@
             Un zoom mayor hará que los objetos se dibujen más pequeños (ya que el valor de escala será menor que 1), 
             y un zoom menor hará que los objetos se dibujen más grandes*/
             
+            
+            /*Al trasladar el origen a este punto, cualquier dibujo que realices posteriormente se centrará en esta posición.
+            Efecto Visual: Si el usuario ha hecho pan (desplazamiento) o zoom en el lienzo, 
+            el centro del área visible se mueve a esta nueva posición central, 
+            alineando el contenido que dibujas a continuación con este punto central.*/
+            ctx.translate(viewport.center.x, viewport.center.y);
+            
             ctx.scale(1 / viewport.zoom, 1 / viewport.zoom);
+            
+            /*viewport.offset.x y viewport.offset.y 
+            representan el desplazamiento actual del viewport. 
+            Este desplazamiento puede ser el resultado de operaciones de arrastrar y soltar o de navegación dentro del lienzo.
+            Al aplicar ctx.translate con estos valores, 
+            estás cambiando el punto de referencia desde el cual se dibujará todo en el lienzo. 
+            Esto es especialmente útil para implementar funciones como paneo o desplazamiento dentro de un área de dibujo más grande.*/
+            
+            // Para que no se vea tan tosco
+            const offset = viewport.getOffset();
+            
+            ctx.translate(offset.x, offset.y);
             
             /*El uso de ctx.save() y ctx.restore() en pares es una práctica común y recomendada cuando se trabaja con transformaciones en el lienzo. 
             Estos métodos permiten modificar temporalmente el lienzo para una operación específica (como aplicar un zoom) 

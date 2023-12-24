@@ -39,3 +39,19 @@ function distance(p1, p2) {
     de sus cuadrados de los catetos de manera que de manera que es afuncion lo facilita */
     return Math.hypot(p1.x - p2.x, p1.y - p2.y);
 }
+
+
+/*Suma las coordenadas x e y de dos puntos (p1 y p2) y devuelve un nuevo punto con el resultado de la suma.
+p1.x + p2.x y p1.y + p2.y son sumas de coordenadas individuales.
+En gráficos por computadora, sumar vectores se utiliza para mover objetos o ajustar su posición. */
+function add(p1, p2) {
+    return new Point(p1.x + p2.x, p1.y + p2.y);
+}
+
+
+/*Resta las coordenadas x e y del punto p2 del punto p1 y devuelve un nuevo punto con el resultado de la resta.
+p1.x - p2.x y p1.y - p2.y son restas de coordenadas individuales.
+La resta de vectores se utiliza para encontrar la dirección y magnitud del movimiento entre dos puntos. */
+function subtract(p1, p2) {
+    return new Point(p1.x - p2.x, p1.y - p2.y);
+}
