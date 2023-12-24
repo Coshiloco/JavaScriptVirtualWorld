@@ -1,7 +1,9 @@
 class GraphEditor {
 
-    constructor(canvas, graph) {
-        this.canvas = canvas;
+    constructor(viewport, graph) {
+        this.viewport = viewport;
+        // Y creamos el atributo del canvas pasandoselo del viewport
+        this.canvas = viewport.canvas;
         this.graph = graph;
         
         this.ctx = this.canvas.getContext("2d");
@@ -43,9 +45,10 @@ class GraphEditor {
     
     #handleMouseMove(evt) {
         // Obtener la posicion del raton cuandp estas pulsando
-        this.mause = new Point(evt.offsetX, evt.offsetY);
+        this.mause = this.viewport.getMouse(evt);
         // Para saber si el punto que hemos pulsado esta en el grafo
-        this.hovered = getNearestPoint(this.mause, this.graph.points, 10);
+        // Para arreglar tambien la distancia del punto sobre el que estas sobrevolando se multiplica por el zoom tambien 
+        this.hovered = getNearestPoint(this.mause, this.graph.points, 10 * this.viewport.zoom);
         // Pillamos la posicion del dragging y si le pasamso las coordenadas del punto al punto que esta seleccionado
         if (this.dragging == true) {
             this.selected.x = this.mause.x;

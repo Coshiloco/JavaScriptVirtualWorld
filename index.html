@@ -59,7 +59,7 @@
         */
         const viewport = new Viewport(myCanvas);
         
-        const graphEditor = new GraphEditor(myCanvas, graph);
+        const graphEditor = new GraphEditor(viewport, graph);
         
         // para animar y dibujar el grafo
         
@@ -68,7 +68,29 @@
         function animate() {
             // Se limpia el canvas
             ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+            // Guardamso el estado del canvas
+            ctx.save();
+            // Se aplica el zoom con el viewport
+            /*El uso de ctx.scale(1 / viewport.zoom, 1 / viewport.zoom) para ajustar el zoom puede parecer 
+            un poco contrario a la intuición al principio, porque un zoom más grande resulta en una escala más pequeña. 
+            Esto se debe a que estás ajustando el lienzo en sí, no los objetos que se dibujan en él. Cuando haces zoom "hacia adentro" en un lienzo, 
+            en realidad estás reduciendo la escala del lienzo para que un área más grande de tu escena o gráficos quepa en el espacio visible.*/
+            
+            /*Al escalar con 1 / viewport.zoom, estás ajustando el tamaño de todo lo que se dibuja posteriormente en el lienzo. 
+            Un zoom mayor hará que los objetos se dibujen más pequeños (ya que el valor de escala será menor que 1), 
+            y un zoom menor hará que los objetos se dibujen más grandes*/
+            
+            ctx.scale(1 / viewport.zoom, 1 / viewport.zoom);
+            
+            /*El uso de ctx.save() y ctx.restore() en pares es una práctica común y recomendada cuando se trabaja con transformaciones en el lienzo. 
+            Estos métodos permiten modificar temporalmente el lienzo para una operación específica (como aplicar un zoom) 
+            y luego volver al estado normal para continuar con otras operaciones de dibujo sin que estas se vean afectadas por las transformaciones anteriores.*/
+            
             graphEditor.display();
+            
+            // Restauramos para que no escale infinitamente 
+            ctx.restore();
+            
             //Frame de animacion
             requestAnimationFrame(animate);
         }

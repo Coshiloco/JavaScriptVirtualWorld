@@ -8,7 +8,34 @@ class Viewport {
         Un valor de zoom de 1 generalmente significa una visualización a escala 1:1, sin acercamiento ni alejamiento. */
         this.zoom = 1;
         
+        /*Definimos un offset para cuando pulsemos con la rueda del raton que depslazemos con un drag and drop 
+        y el zoom s enos desplaze hacia donde nosotros queremos*/
+        this.offset = new Point(0, 0);
+        
+        // Para hacer todos los calculos creamos un objeto que contenga el punto donde empieza , el punto donde termina ese drag es decir donde quieres parar de hacer zoom
+        // la distancia que se calcula que es el offset y si esta activo o no 
+        
+        this.drag = {
+            start: new Point(0, 0),
+            end: new Point(0, 0),
+            offset: new Point(0, 0),
+            active: false
+        };
+        
         this.#addEventListeners();
+    }
+    
+    // Como al alejar el zoom se nos esta perdiendo la informacion del raton pro tanto el segmento se esta pintando mal
+    getMouse(evt) {
+        // Como hemos aplicado zoom los valores del mause cambian por lo tanto hay que ajustarlos
+        return new Point(
+            /*Este código es importante en aplicaciones donde el lienzo ha sido escalado para implementar funcionalidades de zoom. 
+            Sin este ajuste, las acciones del usuario en el lienzo (como hacer clic en un punto para dibujar o seleccionar algo) 
+            no se corresponderían con las coordenadas esperadas después del zoom. 
+            Al multiplicar las coordenadas del evento por el factor de zoom, garantizas que las acciones del usuario se interpreten correctamente en el espacio transformado. */
+            evt.offsetX * this.zoom,
+            evt.offsetY * this.zoom
+        );
     }
     
     #addEventListeners() {
@@ -34,10 +61,5 @@ class Viewport {
         this.zoom += dir * step;
         
         this.zoom = Math.max(1, Math.min(5, this.zoom));
-        
-        
-        
-        
-        console.log(` el zom cuando entra al metodo es ${this.zoom}`);
     }
 }
